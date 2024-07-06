@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Button,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -12,12 +13,22 @@ import {styles} from '../Home/styles';
 import {CARTICON, DETAILBACKGROUND, HEARTICON} from '../../Constant';
 import {CategoryComp} from '../Home/PlantComponent';
 import {StatusBarBac} from '../Home/Home';
+import Animated from 'react-native-reanimated';
 
 const Detail = ({route, navigation}) => {
   let {detail} = route.params;
   useEffect(() => {
     console.log('7', detail);
   }, [detail]);
+  // return (
+  //   <View style={{flex: 1, marginTop: 50}}>
+  //     <Animated.View
+  //       style={{width: 100, height: 100, backgroundColor: 'green'}}
+  //       sharedTransitionTag="sharedTag"
+  //     />
+  //     <Button title="Go back" onPress={() => navigation.navigate('Home')} />
+  //   </View>
+  // );
   return (
     <SafeAreaView style={styles.maincontainer}>
       <StatusBarBac color={'#9ce5cc'} />
@@ -26,9 +37,11 @@ const Detail = ({route, navigation}) => {
           source={DETAILBACKGROUND}
           style={styles.detailheaderback}>
           <CategoryComp item={detail} />
-          <Text style={[styles.detailplantname, {marginBottom: 20}]}>
-            {detail?.name}
-          </Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={[styles.detailplantname, {marginBottom: 20}]}>
+              {detail?.name}
+            </Text>
+          </TouchableOpacity>
           <View style={{marginBottom: 10}}>
             <Text style={styles.priceheading}>Price</Text>
             <Text style={styles.detailpagepricetext}>${detail?.price}</Text>
@@ -37,13 +50,15 @@ const Detail = ({route, navigation}) => {
             <Text style={styles.priceheading}>Size</Text>
             <Text style={styles.detailpagepricetext}>{detail?.size}</Text>
           </View>
-
-          <View style={styles.detailplantabs}>
-            <Image
+          <Animated.View
+            onPress={() => navigation.goBack()}
+            style={styles.detailplantabs}>
+            <Animated.Image
+              sharedTransitionTag="sharedTag"
               source={{uri: detail?.image}}
               style={styles.detailplantimage}
             />
-          </View>
+          </Animated.View>
         </ImageBackground>
         <View style={{padding: 20}}>
           <Text style={styles.detailpageheader}>Plant Bio</Text>

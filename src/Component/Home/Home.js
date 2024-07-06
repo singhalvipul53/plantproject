@@ -1,32 +1,25 @@
-import {View, Text, ScrollView} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import PlantComponent from './PlantComponent';
 import {styles} from './styles';
-import axios from 'axios';
+import apiHook from '../CustomHook/ApiHook';
+// import ApiHook from '../CustomHook.js/ApiHook';
 
 const Home = ({navigation}) => {
-  const [plantlist, setplantlist] = useState([]);
+  const {getData, data} = apiHook();
   useEffect(() => {
     fetchplantlist();
   }, []);
-  const fetchplantlist = () => {
-    axios
-      .get('https://create.blinkapi.io/api/eSphKNzwb9EJBt6GBjKx7Q')
-      .then(res => {
-        console.log('16', res.data);
-        setplantlist(res.data);
-      })
-      .catch(err => {
-        console.log('18', err);
-      });
+  const fetchplantlist = async () => {
+    await getData('https://create.blinkapi.io/api/eSphKNzwb9EJBt6GBjKx7Q');
   };
   return (
     <SafeAreaView style={styles.maincontainer}>
       <ScrollView contentContainerStyle={{paddingBottom: 20}}>
         <View style={styles.mainbody}>
           {/* Main Plant Component */}
-          {plantlist.map((item, index) => (
+          {data.map((item, index) => (
             <PlantComponent item={item} key={index} navigation={navigation} />
           ))}
         </View>

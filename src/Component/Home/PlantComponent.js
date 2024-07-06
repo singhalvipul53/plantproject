@@ -4,8 +4,11 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  // Animated,
+  Easing,
+  Button,
 } from 'react-native';
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {
   CARTICON,
   CATHANDICON,
@@ -14,6 +17,7 @@ import {
   PLANTBACKGROUND,
 } from '../../Constant';
 import {styles} from './styles';
+import Animated, {useSharedValue} from 'react-native-reanimated';
 
 const PlantComponent = ({item, navigation}) => {
   const movetodetailpage = () => {
@@ -21,6 +25,19 @@ const PlantComponent = ({item, navigation}) => {
       detail: item,
     });
   };
+  console.log('24', item?.image);
+  // return (
+  //   <View style={{flex: 1}}>
+  //     <Animated.View
+  //       style={{width: 150, height: 150, backgroundColor: 'green'}}
+  //       sharedTransitionTag="sharedTag"
+  //     />
+  //     <Button
+  //       title="Go to Details"
+  //       onPress={() => navigation.navigate('Detail')}
+  //     />
+  //   </View>
+  // );
   return (
     <TouchableOpacity onPress={movetodetailpage} style={{marginTop: 50}}>
       <ImageBackground
@@ -40,9 +57,49 @@ const PlantComponent = ({item, navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.absimagecont}>
-          <Image source={{uri: item?.image}} style={styles.plantimage} />
-        </View>
+        <Animated.View style={styles.absimagecont}>
+          <Animated.Image
+            sharedTransitionTag="sharedTag"
+            source={{uri: item?.image}}
+            style={[styles.plantimage]}
+          />
+        </Animated.View>
+        {/* <TouchableOpacity onPress={handleanimation} style={styles.absimagecont}>
+          <Animated.Image
+            source={{uri: item?.image}}
+            style={[
+              styles.plantimage,
+              {
+                transform: [
+                  {
+                    translateX: animatedValue.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, 120],
+                    }),
+                  },
+                  {
+                    translateY: animatedValue.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, 25],
+                    }),
+                  },
+                  {
+                    scaleX: animatedValue.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, 15],
+                    }),
+                  },
+                  {
+                    scaleY: animatedValue.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, 12.5],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          />
+        </TouchableOpacity> */}
       </ImageBackground>
     </TouchableOpacity>
   );
