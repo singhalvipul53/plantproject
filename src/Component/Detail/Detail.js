@@ -14,6 +14,7 @@ import {CARTICON, DETAILBACKGROUND, HEARTICON} from '../../Constant';
 import {CategoryComp} from '../Home/PlantComponent';
 import {StatusBarBac} from '../Home/Home';
 import Animated from 'react-native-reanimated';
+import {SharedElement} from 'react-navigation-shared-element';
 
 const Detail = ({route, navigation}) => {
   let {detail} = route.params;
@@ -50,15 +51,16 @@ const Detail = ({route, navigation}) => {
             <Text style={styles.priceheading}>Size</Text>
             <Text style={styles.detailpagepricetext}>{detail?.size}</Text>
           </View>
-          <Animated.View
+          <View
             onPress={() => navigation.goBack()}
             style={styles.detailplantabs}>
-            <Animated.Image
-              sharedTransitionTag="sharedTag"
-              source={{uri: detail?.image}}
-              style={styles.detailplantimage}
-            />
-          </Animated.View>
+            <SharedElement id={`item.${detail.id}.photo`}>
+              <Image
+                source={{uri: detail?.image}}
+                style={styles.detailplantimage}
+              />
+            </SharedElement>
+          </View>
         </ImageBackground>
         <View style={{padding: 20}}>
           <Text style={styles.detailpageheader}>Plant Bio</Text>

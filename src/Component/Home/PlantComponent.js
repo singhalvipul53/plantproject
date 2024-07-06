@@ -18,26 +18,14 @@ import {
 } from '../../Constant';
 import {styles} from './styles';
 import Animated, {useSharedValue} from 'react-native-reanimated';
-
+import {SharedElement} from 'react-navigation-shared-element';
 const PlantComponent = ({item, navigation}) => {
   const movetodetailpage = () => {
     navigation.navigate('Detail', {
       detail: item,
     });
   };
-  console.log('24', item?.image);
-  // return (
-  //   <View style={{flex: 1}}>
-  //     <Animated.View
-  //       style={{width: 150, height: 150, backgroundColor: 'green'}}
-  //       sharedTransitionTag="sharedTag"
-  //     />
-  //     <Button
-  //       title="Go to Details"
-  //       onPress={() => navigation.navigate('Detail')}
-  //     />
-  //   </View>
-  // );
+  console.log('24', item);
   return (
     <TouchableOpacity onPress={movetodetailpage} style={{marginTop: 50}}>
       <ImageBackground
@@ -57,13 +45,11 @@ const PlantComponent = ({item, navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <Animated.View style={styles.absimagecont}>
-          <Animated.Image
-            sharedTransitionTag="sharedTag"
-            source={{uri: item?.image}}
-            style={[styles.plantimage]}
-          />
-        </Animated.View>
+        <View style={styles.absimagecont}>
+          <SharedElement id={`item.${item.id}.photo`}>
+            <Image source={{uri: item?.image}} style={[styles.plantimage]} />
+          </SharedElement>
+        </View>
         {/* <TouchableOpacity onPress={handleanimation} style={styles.absimagecont}>
           <Animated.Image
             source={{uri: item?.image}}
